@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Leaf Travel</title>
+</head>
+<body>
+<div class="voucher" id="voucher">
+    <div class="top">
+        <div class="logo">
+            <img src="https://1.downloader.disk.yandex.ru/preview/7ceb091d5e912a62f0d75a94cf4d9abe2a10314b4e40a47114d707dccf41fade/inf/pg3AhI6jW71wdDWnA8F62gTO0gHCLCvtC-g4Aq3XTHdKpKmsaX7_gUDtbpYKHi6SgC55OPVhHOExeOaQ4Y1Igg%3D%3D?uid=418974076&filename=Logo%20dark.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=418974076&tknv=v3&size=1718x1270"
+                alt="Leaf Travel Logo">
+        </div>
+        <div class="top-right">
+            <span><b>Voucher</b></span>
+            <span class="editable" contenteditable="true">20.07.2025 / 27.07.2025</span>
+            <b>№ <span class="editable" contenteditable="true">1264370</span></b>
+            <span class="editable" contenteditable="true">👤1 👩‍👦0 👶0</span>
+        </div>
+    </div>
+
+    <div class="section-title">Отель и трансфер / Hotel and Transfer</div>
+    <table>
+        <tr>
+            <th>Туристы</th>
+            <th>Проживание</th>
+            <th>Отель / Номер / Питание</th>
+            <th>Трансфер</th>
+            <th>DMC</th>
+        </tr>
+        <tr>
+            <td class="editable" contenteditable="true">Rasim / Akhmedshin</td>
+            <td class="editable" contenteditable="true">20.07.2025 / 27.07.2025</td>
+            <td class="editable" contenteditable="true">IC HOTELS SANTAI FAMILY RESORT<br>ULTRA ALL
+                INCLUSIVE<br>STANDART ROOM SEA VIEW</td>
+            <td class="editable" contenteditable="true">Групповой</td>
+            <td class="editable" contenteditable="true">Leaf Travel</td>
+        </tr>
+    </table>
+
+    <div class="section-title">Полетные данные / Flight data</div>
+    <table>
+        <tr>
+            <th>Направление</th>
+            <th>Дата</th>
+            <th>Рейс</th>
+            <th>Вылет</th>
+            <th>Прилет</th>
+        </tr>
+        <tr>
+            <td>Туда</td>
+            <td class="editable" contenteditable="true">20.07.2025</td>
+            <td class="editable" contenteditable="true">Сб-5531</td>
+            <td class="editable" contenteditable="true">TAS 05:40</td>
+            <td class="editable" contenteditable="true">MLE 09:40</td>
+        </tr>
+        <tr>
+            <td>Обратно</td>
+            <td class="editable" contenteditable="true">27.07.2025</td>
+            <td class="editable" contenteditable="true">Сб-5531</td>
+            <td class="editable" contenteditable="true">MLE 05:40</td>
+            <td class="editable" contenteditable="true">TAS 09:40</td>
+        </tr>
+    </table>
+
+    <div class="section-title">Туристы / Tourists</div>
+    <table id="touristTable">
+        <thead>
+            <tr>
+                <th>Класс</th>
+                <th>Имя</th>
+                <th>Пол</th>
+                <th>Дата рождения</th>
+                <th>Гражданство</th>
+                <th>Документ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="section-title">Дополнительная информация</div>
+    <div class="info">
+        Время ожидания туристов на групповой трансфер с момента посадки самолёта — <b>1,5 часа</b>.<br>
+        Более длительное ожидание трансфера, а также возврат денежных средств не предусмотрены.<br>
+        Если у вас возникли сложности на паспортном контроле или при получении багажа, пожалуйста,
+        сообщите об этом по номеру горячей линии для дальнейшей координации.<br><br>
+        <b>Внимание!</b> Информацию о времени обратного трансфера можно получить накануне вечером,
+        после 20:00 на ресепшн отеля. В случае отсутствия информации рекомендуем связаться по номеру поддержки,
+        указанному в данном ваучере.
+    </div>
+
+    <div class="footer">
+        <p><b>leaf_travel@mail.ru</b> | <a href="https://t.me/leaf_traveltour" target="_blank">t.me/leaf_traveltour</a>
+        </p>
+        <p><b>Поддержка туристов 24/7</b></p>
+        <p>Спасибо за ваше доверие 🌿 Желаем прекрасного отдыха!</p>
+    </div>
+    <div class="btn-container" id="buttons">
+        <button class="btn" onclick="addRow()">➕ Добавить туриста</button>
+        <button class="btn btn-danger" onclick="deleteLast()">✖ Удалить последнего</button>
+        <button class="btn" onclick="savePDF()">📄 Скачать PDF</button>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+    function addRow() {
+        const table = document.querySelector("#touristTable tbody");
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+    <td class="editable" contenteditable="true">/E/E</td>
+    <td class="editable" contenteditable="true">MR NEW TOURIST</td>
+    <td class="editable" contenteditable="true">MALE</td>
+    <td class="editable" contenteditable="true">01.01.2000</td>
+    <td class="editable" contenteditable="true">UZB</td>
+    <td class="editable" contenteditable="true">FA000000</td>`;
+        table.appendChild(newRow);
+    }
+    function deleteLast() {
+        const table = document.querySelector("#touristTable tbody");
+        if (table.rows.length > 0) table.deleteRow(table.rows.length - 1);
+    }
+
+    async function savePDF() {
+        const { jsPDF } = window.jspdf;
+        const voucher = document.getElementById('voucher');
+        const buttons = document.getElementById('buttons');
+        buttons.style.display = 'none';
+
+        window.scrollTo(0, 0); // во избежание сдвига
+
+        const canvas = await html2canvas(voucher, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#ffffff'
+        });
+
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const imgWidth = pageWidth;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+        pdf.save('LeafTravel_Voucher_1264370.pdf');
+
+        buttons.style.display = 'block';
+    }
+</script>
+</body>
+</html>
