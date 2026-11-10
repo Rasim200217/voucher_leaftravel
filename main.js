@@ -2,7 +2,7 @@
 (function () {
   const LS_URL = "leaf_ocr_url";
   const LS_CODE = "leaf_ocr_code";
-  const DEFAULT_URL = ""; // после деплоя можно вписать сюда адрес воркера
+  const DEFAULT_URL = "https://leaf-voucher-ocr.rasim200217.workers.dev";
   const MAX_SIDE = 2000;
 
   let files = []; // { name, media_type, data, preview }
