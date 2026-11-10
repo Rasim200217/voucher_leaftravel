@@ -1,0 +1,12 @@
+name = "leaf-voucher-ocr"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# С каких сайтов разрешено обращаться к воркеру (через запятую)
+ALLOWED_ORIGINS = "https://rasim200217.github.io,http://localhost:8080,http://127.0.0.1:8080"
+
+# Секреты (задаются командами, НЕ здесь):
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put ACCESS_CODE

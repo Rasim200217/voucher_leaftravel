@@ -16,13 +16,13 @@
         </div>
          <div>
             <h5>Принимающая компания:</h3>
-            <p class="editable" contenteditable="true">Pegas Touristics</p>
+            <p class="editable" contenteditable="true" data-field="operator">Pegas Touristics</p>
         </div>
         <div class="top-right">
             <span><b>Voucher</b></span>
-            <span class="editable" contenteditable="true">20.07.2025 / 27.07.2025</span>
-            <b>№ <span class="editable" contenteditable="true">1264370</span></b>
-            <span class="editable" contenteditable="true">👤1 👩‍👦0 👶0</span>
+            <span class="editable" contenteditable="true" data-field="dates_top">20.07.2025 / 27.07.2025</span>
+            <b>№ <span class="editable" contenteditable="true" data-field="number">1264370</span></b>
+            <span class="editable" contenteditable="true" data-field="pax">👤1 👩‍👦0 👶0</span>
         </div>
     </div>
 
@@ -36,11 +36,11 @@
             <th>DMC</th>
         </tr>
         <tr>
-            <td class="editable" contenteditable="true">Rasim / Akhmedshin</td>
-            <td class="editable" contenteditable="true">20.07.2025 / 27.07.2025</td>
-            <td class="editable" contenteditable="true">IC HOTELS SANTAI FAMILY RESORT<br>ULTRA ALL
+            <td class="editable" contenteditable="true" data-field="names">Rasim / Akhmedshin</td>
+            <td class="editable" contenteditable="true" data-field="stay">20.07.2025 / 27.07.2025</td>
+            <td class="editable" contenteditable="true" data-field="hotel">IC HOTELS SANTAI FAMILY RESORT<br>ULTRA ALL
                 INCLUSIVE<br>STANDART ROOM SEA VIEW</td>
-            <td class="editable" contenteditable="true">Групповой</td>
+            <td class="editable" contenteditable="true" data-field="transfer">Групповой</td>
             <td class="editable" contenteditable="true">Leaf Travel</td>
         </tr>
     </table>
@@ -56,17 +56,17 @@
         </tr>
         <tr>
             <td>Туда</td>
-            <td class="editable" contenteditable="true">20.07.2025</td>
-            <td class="editable" contenteditable="true">Сб-5531</td>
-            <td class="editable" contenteditable="true">TAS 05:40</td>
-            <td class="editable" contenteditable="true">MLE 09:40</td>
+            <td class="editable" contenteditable="true" data-field="out_date">20.07.2025</td>
+            <td class="editable" contenteditable="true" data-field="out_flight">Сб-5531</td>
+            <td class="editable" contenteditable="true" data-field="out_dep">TAS 05:40</td>
+            <td class="editable" contenteditable="true" data-field="out_arr">MLE 09:40</td>
         </tr>
         <tr>
             <td>Обратно</td>
-            <td class="editable" contenteditable="true">27.07.2025</td>
-            <td class="editable" contenteditable="true">Сб-5531</td>
-            <td class="editable" contenteditable="true">MLE 05:40</td>
-            <td class="editable" contenteditable="true">TAS 09:40</td>
+            <td class="editable" contenteditable="true" data-field="ret_date">27.07.2025</td>
+            <td class="editable" contenteditable="true" data-field="ret_flight">Сб-5531</td>
+            <td class="editable" contenteditable="true" data-field="ret_dep">MLE 05:40</td>
+            <td class="editable" contenteditable="true" data-field="ret_arr">TAS 09:40</td>
         </tr>
     </table>
 
@@ -82,11 +82,7 @@
                 <th>Документ</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-              
-            </tr>
-        </tbody>
+        <tbody></tbody>
     </table>
 
     <div class="section-title">Дополнительная информация</div>
@@ -107,6 +103,7 @@
         <p>Спасибо за ваше доверие 🌿 Желаем прекрасного отдыха!</p>
     </div>
     <div class="btn-container" id="buttons">
+        <button class="btn btn-ai" onclick="openAutofill()">📷 Заполнить из фото</button>
         <button class="btn" onclick="addRow()">➕ Добавить туриста</button>
         <button class="btn btn-danger" onclick="deleteLast()">✖ Удалить последнего</button>
         <button class="btn" onclick="savePDF()">📄 Скачать PDF</button>
@@ -115,6 +112,7 @@
 
 
 
+<script src="main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -158,7 +156,8 @@
         const imgWidth = pageWidth;
         const imgHeight = canvas.height * imgWidth / canvas.width;
         pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
-        pdf.save('LeafTravel_Voucher_1264370.pdf');
+        const num = (document.querySelector('[data-field="number"]')?.textContent || '').trim().replace(/[^\w-]/g, '') || 'voucher';
+        pdf.save('LeafTravel_Voucher_' + num + '.pdf');
 
         buttons.style.display = 'block';
     }
