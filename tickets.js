@@ -206,7 +206,7 @@
     if (out?.aircraft) settings.outAircraft = out.aircraft;
     if (ret?.aircraft) settings.retAircraft = ret.aircraft;
     [["out", out], ["ret", ret]].forEach(([k, f]) => {
-      if (!f) return;
+      if (!f || !f.date) return;
       const a = parseDate(f.date), b = parseDate(f.arr_date);
       arrOffset[k] = a && b ? Math.round((b - a) / 86400000) : null;
     });

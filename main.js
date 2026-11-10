@@ -270,8 +270,9 @@
     }
 
     // Рейсы
-    const out = d.flights?.outbound;
-    const ret = d.flights?.return;
+    const has = (f) => f && (f.flight_number || f.date || f.dep_airport);
+    const out = has(d.flights?.outbound) ? d.flights.outbound : null;
+    const ret = has(d.flights?.return) ? d.flights.return : null;
     if (out) {
       set("out_date", out.date);
       set("out_flight", out.flight_number);

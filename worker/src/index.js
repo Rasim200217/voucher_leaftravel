@@ -6,22 +6,22 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const MAX_IMAGES = 20;
 
-const nullableString = { type: ["string", "null"] };
+const str = { type: "string" };
 
 const flightSchema = {
-  type: ["object", "null"],
+  type: "object",
   additionalProperties: false,
   required: ["date", "flight_number", "dep_airport", "dep_time", "arr_date", "arr_airport", "arr_time", "airline", "aircraft"],
   properties: {
-    date: { ...nullableString, description: "Дата вылета DD.MM.YYYY" },
-    flight_number: { ...nullableString, description: "Номер рейса как в билете, например HY-5531" },
-    dep_airport: { ...nullableString, description: "IATA-код аэропорта вылета, например TAS" },
-    dep_time: { ...nullableString, description: "Время вылета HH:MM" },
-    arr_date: { ...nullableString, description: "Дата прилёта DD.MM.YYYY (если отличается от даты вылета — обязательно укажи)" },
-    airline: { ...nullableString, description: "Название авиакомпании латиницей ЗАГЛАВНЫМИ, например UZBEKISTAN AIRWAYS" },
-    aircraft: { ...nullableString, description: "Тип самолёта, например Airbus A321neo" },
-    arr_airport: { ...nullableString, description: "IATA-код аэропорта прилёта" },
-    arr_time: { ...nullableString, description: "Время прилёта HH:MM" },
+    date: { ...str, description: "Дата вылета DD.MM.YYYY" },
+    flight_number: { ...str, description: "Номер рейса как в билете, например HY-5531" },
+    dep_airport: { ...str, description: "IATA-код аэропорта вылета, например TAS" },
+    dep_time: { ...str, description: "Время вылета HH:MM" },
+    arr_date: { ...str, description: "Дата прилёта DD.MM.YYYY (если отличается от даты вылета — обязательно укажи)" },
+    airline: { ...str, description: "Название авиакомпании латиницей ЗАГЛАВНЫМИ, например UZBEKISTAN AIRWAYS" },
+    aircraft: { ...str, description: "Тип самолёта, например Airbus A321neo" },
+    arr_airport: { ...str, description: "IATA-код аэропорта прилёта" },
+    arr_time: { ...str, description: "Время прилёта HH:MM" },
   },
 };
 
@@ -30,10 +30,10 @@ const SCHEMA = {
   additionalProperties: false,
   required: ["tourists", "hotel", "flights", "operator", "booking_number", "cabin_class", "baggage"],
   properties: {
-    booking_number: { ...nullableString, description: "Номер брони авиабилета (PNR) или номер заказа, если виден на скриншоте рейса" },
-    cabin_class: { ...nullableString, description: "Класс обслуживания по-русски: Эконом / Бизнес" },
-    baggage: { ...nullableString, description: "Норма багажа по-русски, например «Багаж до 20 кг»" },
-    operator: { ...nullableString, description: "Принимающая компания / туроператор, если видно" },
+    booking_number: { ...str, description: "Номер брони авиабилета (PNR) или номер заказа, если виден на скриншоте рейса" },
+    cabin_class: { ...str, description: "Класс обслуживания по-русски: Эконом / Бизнес" },
+    baggage: { ...str, description: "Норма багажа по-русски, например «Багаж до 20 кг»" },
+    operator: { ...str, description: "Принимающая компания / туроператор, если видно" },
     tourists: {
       type: "array",
       items: {
@@ -48,21 +48,21 @@ const SCHEMA = {
           birth_date: { type: "string", description: "DD.MM.YYYY" },
           citizenship: { type: "string", description: "Код страны ISO 3166-1 alpha-3, например UZB" },
           document_number: { type: "string", description: "Серия и номер паспорта без пробелов" },
-          passport_expiry: { type: ["string", "null"], description: "Срок действия паспорта DD.MM.YYYY" },
+          passport_expiry: { type: "string", description: "Срок действия паспорта DD.MM.YYYY" },
           category: { type: "string", enum: ["ADULT", "CHILD", "INFANT"], description: "INFANT до 2 лет, CHILD 2–11 лет на дату вылета" },
         },
       },
     },
     hotel: {
-      type: ["object", "null"],
+      type: "object",
       additionalProperties: false,
       required: ["name", "room", "meal", "check_in", "check_out"],
       properties: {
-        name: { ...nullableString, description: "Название отеля ЗАГЛАВНЫМИ, со звёздностью если указана" },
-        room: { ...nullableString, description: "Тип номера ЗАГЛАВНЫМИ" },
-        meal: { ...nullableString, description: "Питание ЗАГЛАВНЫМИ, например ULTRA ALL INCLUSIVE" },
-        check_in: { ...nullableString, description: "DD.MM.YYYY" },
-        check_out: { ...nullableString, description: "DD.MM.YYYY" },
+        name: { ...str, description: "Название отеля ЗАГЛАВНЫМИ, со звёздностью если указана" },
+        room: { ...str, description: "Тип номера ЗАГЛАВНЫМИ" },
+        meal: { ...str, description: "Питание ЗАГЛАВНЫМИ, например ULTRA ALL INCLUSIVE" },
+        check_in: { ...str, description: "DD.MM.YYYY" },
+        check_out: { ...str, description: "DD.MM.YYYY" },
       },
     },
     flights: {
@@ -78,9 +78,9 @@ const SYSTEM = `Ты помогаешь турагентству заполня�
 Извлеки данные строго по схеме.
 - Паспорта: если есть машиночитаемая зона (MRZ), сверяй с ней имя, номер, дату рождения и гражданство. Имена и фамилии — латиницей, заглавными, как в паспорте.
 - title: MR для взрослых мужчин, MRS для взрослых женщин, CHD для детей 2–11 лет, INF для младенцев до 2 лет (на дату вылета, если она известна).
-- Рейсы: outbound — рейс туда, return — обратно. Если на скриншоте только один рейс, второй = null.
+- Рейсы: outbound — рейс туда, return — обратно. Если на скриншоте только один рейс, у второго все поля — пустые строки.
 - Даты всегда DD.MM.YYYY, время HH:MM (24 часа).
-- Если какого-то значения не видно — ставь null. Ничего не придумывай.`;
+- Если какого-то значения не видно — ставь пустую строку "". Если рейса или отеля нет на файлах — все его поля пустые строки. Ничего не придумывай.`;
 
 function cors(origin, env) {
   const allowed = (env.ALLOWED_ORIGINS || "").split(",").map((s) => s.trim());
