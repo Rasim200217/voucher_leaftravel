@@ -225,6 +225,7 @@
     tr.dataset.last = t.last_name || "";
     tr.dataset.cat = t.category || "ADULT";
     tr.dataset.doc = (t.document_number || "").toUpperCase();
+    tr.dataset.expiry = t.passport_expiry || "";
     const name = [t.title, t.first_name, t.last_name].filter(Boolean).join(" ").toUpperCase();
     tr.innerHTML = [
       "/E/E",
@@ -299,6 +300,12 @@
     set("dates_top", dates);
 
     set("operator", d.operator);
+
+    // Билеты: данные, которых нет в ваучере (авиакомпания, самолёт, багаж…)
+    if (window.LeafTickets) {
+      window.LeafTickets.applyExtracted(d);
+      window.LeafTickets.render();
+    }
 
     return done.length ? done.join(", ") : "новых данных не найдено";
   }

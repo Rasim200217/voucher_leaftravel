@@ -11,12 +11,15 @@ const nullableString = { type: ["string", "null"] };
 const flightSchema = {
   type: ["object", "null"],
   additionalProperties: false,
-  required: ["date", "flight_number", "dep_airport", "dep_time", "arr_airport", "arr_time"],
+  required: ["date", "flight_number", "dep_airport", "dep_time", "arr_date", "arr_airport", "arr_time", "airline", "aircraft"],
   properties: {
     date: { ...nullableString, description: "Дата вылета DD.MM.YYYY" },
     flight_number: { ...nullableString, description: "Номер рейса как в билете, например HY-5531" },
     dep_airport: { ...nullableString, description: "IATA-код аэропорта вылета, например TAS" },
     dep_time: { ...nullableString, description: "Время вылета HH:MM" },
+    arr_date: { ...nullableString, description: "Дата прилёта DD.MM.YYYY (если отличается от даты вылета — обязательно укажи)" },
+    airline: { ...nullableString, description: "Название авиакомпании латиницей ЗАГЛАВНЫМИ, например UZBEKISTAN AIRWAYS" },
+    aircraft: { ...nullableString, description: "Тип самолёта, например Airbus A321neo" },
     arr_airport: { ...nullableString, description: "IATA-код аэропорта прилёта" },
     arr_time: { ...nullableString, description: "Время прилёта HH:MM" },
   },
@@ -25,15 +28,18 @@ const flightSchema = {
 const SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["tourists", "hotel", "flights", "operator"],
+  required: ["tourists", "hotel", "flights", "operator", "booking_number", "cabin_class", "baggage"],
   properties: {
+    booking_number: { ...nullableString, description: "Номер брони авиабилета (PNR) или номер заказа, если виден на скриншоте рейса" },
+    cabin_class: { ...nullableString, description: "Класс обслуживания по-русски: Эконом / Бизнес" },
+    baggage: { ...nullableString, description: "Норма багажа по-русски, например «Багаж до 20 кг»" },
     operator: { ...nullableString, description: "Принимающая компания / туроператор, если видно" },
     tourists: {
       type: "array",
       items: {
         type: "object",
         additionalProperties: false,
-        required: ["title", "first_name", "last_name", "gender", "birth_date", "citizenship", "document_number", "category"],
+        required: ["title", "first_name", "last_name", "gender", "birth_date", "citizenship", "document_number", "passport_expiry", "category"],
         properties: {
           title: { type: "string", enum: ["MR", "MRS", "MS", "CHD", "INF"] },
           first_name: { type: "string", description: "Имя латиницей ЗАГЛАВНЫМИ, как в паспорте" },
@@ -42,6 +48,7 @@ const SCHEMA = {
           birth_date: { type: "string", description: "DD.MM.YYYY" },
           citizenship: { type: "string", description: "Код страны ISO 3166-1 alpha-3, например UZB" },
           document_number: { type: "string", description: "Серия и номер паспорта без пробелов" },
+          passport_expiry: { type: ["string", "null"], description: "Срок действия паспорта DD.MM.YYYY" },
           category: { type: "string", enum: ["ADULT", "CHILD", "INFANT"], description: "INFANT до 2 лет, CHILD 2–11 лет на дату вылета" },
         },
       },

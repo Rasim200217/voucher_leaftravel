@@ -1,0 +1,59 @@
+/* ---------- Авиабилеты ---------- */
+.tk-section { width: 210mm; margin-top: 30px; }
+
+.tk-panel {
+    background: #fff; border: 1.5px solid var(--green); border-radius: 20px;
+    padding: 22px 28px; box-shadow: 0 8px 20px rgba(0, 99, 59, 0.08);
+}
+.tk-head h2 { margin: 0; color: var(--green); font-size: 20px; }
+.tk-sub { color: #666; font-size: 13px; }
+.tk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px 14px; margin-top: 14px; }
+.tk-grid label { font-size: 12px; color: #555; display: flex; flex-direction: column; gap: 3px; }
+.tk-grid input { border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px; font: inherit; font-size: 14px; color: #1d1d1d; }
+.tk-grid input:focus { outline: 2px solid #00633B33; border-color: var(--green); }
+.tk-actions { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+
+.tk-empty { margin-top: 20px; text-align: center; color: #777; font-size: 14px; padding: 30px; border: 2px dashed var(--border); border-radius: 16px; }
+
+.tk-wrap { margin-top: 26px; }
+.tk-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 14px; color: #333; }
+.tk-bar .btn { padding: 7px 14px; font-size: 13px; }
+
+/* Сам лист билета (A4) — стили изолированы от таблиц ваучера */
+.tk-page {
+    width: 210mm; min-height: 297mm; background: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+    border-radius: 8px; padding: 25mm 20mm; box-sizing: border-box; position: relative;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #1d1d1d;
+}
+.tk-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #dadada; padding-bottom: 10px; }
+.tk-header-right { text-align: right; color: #555; font-size: 13px; }
+.tk-block { margin-top: 25px; font-size: 14px; line-height: 1.4; display: flex; justify-content: space-between; }
+.tk-block strong { font-weight: 400; display: block; color: #5B5B5B; }
+.tk-col2 { width: 40%; }
+.tk-big { text-transform: uppercase; font-size: 22px; }
+.tk-title { color: #00633B; font-size: 15px; font-weight: 700; margin-top: 25px; margin-bottom: 8px; }
+
+.tk-page table.tk-flight {
+    width: 100%; border-collapse: collapse; border-spacing: 0; margin-top: 15px;
+    border-radius: 8px; overflow: hidden; box-shadow: none;
+}
+.tk-page .tk-flight th {
+    background: #00633B; color: #fff; font-weight: 500; padding: 8px 10px;
+    font-size: 13px; text-align: left; text-transform: none;
+}
+.tk-page .tk-flight td {
+    border: 1px solid #e0e0e0; padding: 8px 10px; font-size: 13px; color: #333;
+    vertical-align: top; background: #fff;
+}
+.tk-page .tk-flight tr:nth-child(even) td { background: #f9f9f9; }
+.tk-page [contenteditable="true"]:focus { outline: 2px solid #00633B33; background: #e9f5ef; }
+
+.tk-important { margin-top: 25px; }
+.tk-important h3 { font-size: 15px; color: #333; text-transform: uppercase; margin-bottom: 8px; }
+.tk-important ul { list-style: none; padding: 0; margin: 0; font-size: 13px; }
+.tk-important li { margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.tk-important li::before { content: "✔"; color: #00633B; font-weight: 700; }
+.tk-note { margin-top: 10px; font-size: 12px; color: #555; font-style: italic; }
+.tk-footer { position: absolute; bottom: 15mm; left: 0; right: 0; text-align: center; font-size: 12px; color: #666; }
+
+@media print { .tk-section { display: none; } }
